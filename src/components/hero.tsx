@@ -4,19 +4,21 @@ import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLinkedin, faBehance } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope,faAt, faPhone, faComputerMouse } from '@fortawesome/free-solid-svg-icons'
+import RenderNavItems from '@/components/navitems';
 
 interface heroProps {
     name : String
 
 }
-
-
+  
 const Hero : React.FC<heroProps> = (props) =>{
-    const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
+    
+    const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false); 
     const [showItems, setShowItems] = useState<boolean>(false);
+    const [showFloatingScrollMsg, setShowFloatingScrollMsg] = useState<boolean>(false);
     useEffect(()=>{
         const sizeWatcher = () => { 
-            setIsSmallScreen(window.innerWidth <=640)
+            setIsSmallScreen(window.innerWidth <= 640)
         };
       
         sizeWatcher();
@@ -24,7 +26,7 @@ const Hero : React.FC<heroProps> = (props) =>{
         
         const scrollWatcher = () => { 
             const scrollPosY = window.scrollY;
-            const scrollThreshold = 800;
+            const scrollThreshold = 450;
             console.log(scrollThreshold  < scrollPosY)
             setShowItems(scrollThreshold  < scrollPosY)
         }
@@ -36,9 +38,22 @@ const Hero : React.FC<heroProps> = (props) =>{
           window.removeEventListener('resize', sizeWatcher);
         };
     },[])
+    useEffect(()=>{
+        const anotherScrollWatcher = () => { 
+            const scrollPosY = window.scrollY;
+            const scrollThreshold = 800;
+            console.log(scrollThreshold  < scrollPosY)
+            setShowFloatingScrollMsg(scrollThreshold  < scrollPosY)
+        }
+        window.addEventListener('scroll', anotherScrollWatcher);
 
+        // Remove event listener on component unmount
+        return () => {
+          window.removeEventListener('scroll', anotherScrollWatcher);
+        };
+    },[])
     return (
-        <div className="flex flex-col mt-12 text-center mx-3">
+        <div className="flex flex-col items-center mt-12 text-center mx-3">
             <div className="flex items-center justify-center mb-6 gap-5"> 
                 <a href="https://linkedin.com/in/lexdacurro" title="Visit my LinkedIn Profile" target="_blank">
                     <FontAwesomeIcon icon={faLinkedin}/>
@@ -64,34 +79,17 @@ const Hero : React.FC<heroProps> = (props) =>{
                 <p className="font-bold mt-4">Let’s Work Together!</p>
             </div>
             { 
-               (!isSmallScreen) ? ( 
-                    <nav className="p-6 mt-14 segoe lg:block md:block"> 
-                    
-                        <div className="flex-grow flex justify-center items-center lg:w-auto font-bold">
-                            <div className="text-sm lg:flex-grow">
-                                <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 mr-4 text-base">
-                                    Case Studies
-                                </a>
-                                <span className="px-6 "> / </span>
-                                <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 mr-4 text-base">
-                                    Work Experience
-                                </a>
-                                <span className="px-6 "> / </span>
-                                <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-base">
-                                    Personal Projects
-                                </a>
-                                <span className="px-6 "> / </span>
-                                <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-base">
-                                    Contacts
-                                </a>
-                            </div>
-                        </div>
-                    </nav>
-               ) : ''
+                (!showItems) ?  (
+                    <div className="relative overflow-auto py-8 mt-14 transition ease-in-out">
+                        { RenderNavItems() }
+                    </div> 
+                ) : ''
+            
             }
+           
             { 
-               (!showItems) ? ( 
-                    <div className="absolute bottom-6 left-[50%] translate-x-[-50%]">  
+               (!showFloatingScrollMsg) ? ( 
+                    <div className="absolute bottom-6 left-[50%] translate-x-[-50%] transition ease-in-out">  
                         <div className="flex items-center justify-center gap-3"> 
                             <Image src="/assets/MouseIcon.png" alt="👋" width={isSmallScreen ? 10 : 20} height={isSmallScreen ? 20 : 30}  className="animate-bounce"></Image>
                             <span className="font-bold text-xs lg:text-base"> Scroll to Continue</span>

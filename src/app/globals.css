@@ -89,7 +89,7 @@ body {
   50%{
     content: '@{UI/UX Designer}';
     font-family: 'Cairo Play' , sans-serif;
-    font-weight: bold;
+   
   }
   100%{
     content: '#Web Enthusiast';
