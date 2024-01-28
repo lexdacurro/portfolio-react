@@ -2,28 +2,99 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@font-face {
+  font-family: 'Eudoxus Sans', sans-serif;
+  src: url('../font/eudoxus/EudoxusSans-Regular.woff'), url('../font/eudoxus/EudoxusSans-Regular.ttf'), url('../font/eudoxus/EudoxusSans-Regular.woff2');
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo+Play:wght@800&display=swap');
+
+@font-face {
+  font-family: 'Cairo Play';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/cairoplay/v7/wXKEE3QSpo4vpRz_mz6FP-8iaauCLt_Hjopv3miu5IvcJo49mOo1EnEa9S_bwGs.woff2) format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Cairo Play';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/cairoplay/v7/wXKEE3QSpo4vpRz_mz6FP-8iaauCLt_Hjopv3miu5IvcJo49mOo1EnEa_i_bwGs.woff2) format('woff2');
+  unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Cairo Play';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/cairoplay/v7/wXKEE3QSpo4vpRz_mz6FP-8iaauCLt_Hjopv3miu5IvcJo49mOo1EnEa8C_b.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+} */
+
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 255, 255, 240;
+  --background-start-rgb: 255, 255, 240;
+  --background-end-rgb: 193, 205, 193;
+  --default-font-color : 50, 50, 49;
+  --gold : 183, 168, 133;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --foreground-rgb: 255, 255, 240;
+    --background-start-rgb: 255, 255, 240;
+    --background-end-rgb: 193, 205, 193;
+    --default-font-color : 50, 50, 49;
+    --gold : 183, 168, 133;
   }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: rgb(var(--default-font-color));
   background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  font-family: 'Eudoxus Sans', sans-serif !important;
+  
+}
+
+.header{
+  letter-spacing: -2%;
+}
+
+.segoe{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.text-switcher::after{
+  content : ' ';
+  animation : textswitch 7s linear infinite;
+  -webkit-animation : textswitch 7s linear infinite;
+}
+
+@keyframes textswitch{
+  0%{
+    content: '<Full_Stack_Developer/>';
+    font-family: 'Courier New', Courier, monospace
+  }
+  50%{
+    content: '@{UI/UX Designer}';
+    font-family: 'Cairo Play' , sans-serif;
+    font-weight: bold;
+  }
+  100%{
+    content: '#Web Enthusiast';
+    font-family :Georgia, 'Times New Roman', Times, serif
+  }
 }
 
 @layer utilities {
@@ -31,3 +102,8 @@ body {
     text-wrap: balance;
   }
 }
+.bg-olive-gradient{
+  background: linear-gradient(#e0e6d8, #C1CDC1);
+}
+
+
